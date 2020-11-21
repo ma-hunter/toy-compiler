@@ -2,16 +2,15 @@
 #include <cstring>
 
 #include "parser.tab.h"
-#include "ast.h"
+#include "def.h"
 
 int yycolumn=1;
-
 #define YY_USER_ACTION    	yylloc.first_line=yylloc.last_line=yylineno; \
 	yylloc.first_column=yycolumn;	yylloc.last_column=yycolumn+yyleng-1; yycolumn+=yyleng;
 
 typedef union {
-	int type_int;
-	int type_float;
+	Integer type_int;
+	Float type_float;
 	char type_id[32];
 	struct node *ptr;
 } YYLVAL;
@@ -24,6 +23,7 @@ int    [0-9]+
 float  ([0-9]*\.[0-9]+)|([0-9]+\.)
 
 %%
+
 {int}        {yylval.type_int = atoi(yytext); return INT;}
 {float}      {yylval.type_float = atof(yytext); return FLOAT;}
 "int"        {strcpy(yylval.type_id, yytext);return TYPE;}

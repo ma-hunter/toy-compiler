@@ -7,8 +7,8 @@
 
 #include <string>
 
-using String = std::string;
 using Boolean = bool;
+using Char = char;
 #if 0
 using Integer  = int;
 using Long = long long;
@@ -20,5 +20,6 @@ using Long = __int128;
 using Float = double;
 using Double = long double;
 #endif
+using String = std::string;
 
 #endif //TOY_COMPILER_TYPE_H

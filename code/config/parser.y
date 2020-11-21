@@ -1,10 +1,13 @@
 %define parse.error verbose
 %locations
 %{
-#include "stdio.h"
-#include "math.h"
-#include "string.h"
-#include "compiler.h"
+#include <cstdio>
+#include <cmath>
+#include <cstring>
+
+#include "parser.tab.h"
+#include "def.h"
+
 extern int yylineno;
 extern char *yytext;
 extern FILE *yyin;
@@ -14,10 +17,10 @@ int yylex();
 %}
 
 %union {
-	int    type_int;
-	float  type_float;
-	char   type_id[32];
-	class ASTNode *ptr;
+	Integer type_int;
+	Float   type_float;
+	char    type_id[32];
+	ASTNode *ptr;
 };
 
 %type  <ptr> program ExtDefList ExtDef  Specifier ExtDecList FuncDec CompSt VarList VarDec ParamDec Stmt StmList DefList Def DecList Dec Exp Args
