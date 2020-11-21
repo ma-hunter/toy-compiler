@@ -127,27 +127,4 @@ Args:    Exp COMMA Args    {$$=make_node(ARGS,yylineno,{$1,$3});}
 
 %%
 
-int main(int argc, char *argv[]) {
-    string file_path;
-    if (argc >= 2) {
-        file_path = string(argv[1]);
-    } else {
-        file_path = "./test.txt";
-    }
 
-    printf("File path = %s\n", file_path.c_str());
-    yyin = fopen(file_path.c_str(), "r");
-    if (!yyin) exit(0);
-    yylineno = 1;
-    yyparse();
-    return 0;
-}
-
-#include<stdarg.h>
-void yyerror(const char* fmt, ...) {
-    va_list ap;
-    va_start(ap, fmt);
-    fprintf(stderr, "Grammar Error at Line %d Column %d: ", yylloc.first_line,yylloc.first_column);
-    vfprintf(stderr, fmt, ap);
-    fprintf(stderr, ".\n");
-}
