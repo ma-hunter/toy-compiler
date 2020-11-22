@@ -11,7 +11,7 @@ extern int yylineno;
 extern char *yytext;
 extern FILE *yyin;
 void yyerror(const char* fmt, ...);
-void print_ast_node(ASTNode *,int);
+void ast::printNode(ASTNode *,int);
 int yylex();
 }
 
@@ -52,7 +52,7 @@ int yylex();
 
 %%
 
-program: ExtDefList    { print_ast_node($1,0); entrypoint($1);}
+program: ExtDefList    { ast::printNode($1,0); entryPoint($1);}
     ;
 ExtDefList: {$$=nullptr;}
     | ExtDef ExtDefList {$$=ast::newNode(EXT_DEF_LIST,yylineno,{$1,$2});}

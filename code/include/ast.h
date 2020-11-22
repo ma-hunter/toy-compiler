@@ -51,6 +51,8 @@ namespace ast {
         const vector<Node *>& nodes = vector<Node *>()
     );
 
+    void printNode(Node *node, int indent);
+
 }
 
 using Operation = ast::Opt;

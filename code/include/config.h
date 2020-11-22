@@ -14,7 +14,7 @@
 #include <ext/pb_ds/hash_policy.hpp>
 #include <ext/pb_ds/trie_policy.hpp>
 
-using std::string, std::unordered_map;
+using std::string, std::unordered_map, std::vector;
 using __gnu_pbds::cc_hash_table, __gnu_pbds::gp_hash_table;
 
 // Configure if print methods work.

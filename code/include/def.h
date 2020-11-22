@@ -9,5 +9,6 @@
 #include "symbol_table.h"
 #include "config.h"
 #include "type.h"
+#include "syntax.h"
 
 #endif //TOY_COMPILER_DEF_H

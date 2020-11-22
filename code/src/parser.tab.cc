@@ -75,7 +75,7 @@ extern int yylineno;
 extern char *yytext;
 extern FILE *yyin;
 void yyerror(const char* fmt, ...);
-void print_ast_node(ASTNode *,int);
+void ast::printNode(ASTNode *,int);
 int yylex();
 
 #line 82 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:315  */
@@ -1520,7 +1520,7 @@ yyreduce:
     {
         case 2:
 #line 55 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    { print_ast_node((yyvsp[0].ptr),0); entrypoint((yyvsp[0].ptr));}
+    { ast::printNode((yyvsp[0].ptr),0); entryPoint((yyvsp[0].ptr));}
 #line 1525 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
