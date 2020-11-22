@@ -20,7 +20,8 @@ namespace symbol_table {
         fFunc = 'F',
         fVar = 'V',
         fParam = 'P',
-        fTemp = 'T'
+        fTemp = 'T',
+        fNull = '\0'
     };
 
     struct Symbol {
@@ -30,6 +31,8 @@ namespace symbol_table {
         string alias;
         SymbolFlag flag;
         int idx;
+
+        Symbol();
     };
 
     optional<Symbol> searchByName(const string &name);

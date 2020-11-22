@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <cmath>
-#include <cstring>
+#include <cstdarg>
 
 #include "parser.tab.h"
 #include "def.h"
@@ -29,7 +29,6 @@ int main(int argc, char *argv[]) {
     exit(EXIT_SUCCESS);
 }
 
-#include<stdarg.h>
 void yyerror(const char* fmt, ...) {
     va_list ap;
     va_start(ap, fmt);

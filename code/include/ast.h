@@ -24,6 +24,8 @@ namespace ast {
         int kind, type;
         var data;
         int level;
+
+        Opt();
     };
 
     struct Code {
@@ -31,6 +33,8 @@ namespace ast {
         vector<shared_ptr<Code>> data;
         Opt op1, op2, res;
         shared_ptr<Code> prev, next;
+
+        Code();
     };
 
     struct Node {
@@ -41,6 +45,8 @@ namespace ast {
         string eTrue, eFalse, sNext;
         shared_ptr<Code> code;
         int type, pos, num;
+
+        Node();
     };
 
     // Methods

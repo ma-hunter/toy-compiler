@@ -8,7 +8,7 @@
 #include <vector>
 
 using std::vector, std::nullopt;
-using symbol_table::SymbolFlag;
+using symbol_table::SymbolFlag, symbol_table::fNull;
 
 SymbolTable symbolTable;
 vector<int> scopeStack;
@@ -82,3 +82,5 @@ void symbol_table::print() {
                symbol.type == INT ? "int" : "float", symbol.flag);
     printf("\n\n");
 }
+
+symbol_table::Symbol::Symbol() : level(0), type(0), paramNum(0), flag(fNull), idx(0) {}

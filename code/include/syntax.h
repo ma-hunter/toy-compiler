@@ -28,7 +28,7 @@ tuple<
     FunctionType *
 > injectPrintFunction(LLVMContext &ctx, IRBuilder<> &builder, Module &_module);
 
-void toObjectCode(shared_ptr<CodeNode> head);
+void toObjectCode(const shared_ptr<CodeNode>& head);
 
 
 #endif //TOY_COMPILER_SYNTAX_H

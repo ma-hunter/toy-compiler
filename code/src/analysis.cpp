@@ -59,6 +59,7 @@ shared_ptr<CodeNode> mergeCodeNode(const vector<shared_ptr<CodeNode>> &list) {
     for (auto &ii : list)
         if (h1 == nullptr) h1 = ii;
         else if (ii) {
+            h2 = ii;
             shared_ptr<CodeNode> t1 = h1->prev;
             shared_ptr<CodeNode> t2 = h2->prev;
             t1->next = h2, t2->next = h1;
@@ -373,7 +374,7 @@ optional<ASTNode *> findLastLoopStatement() {
     return nullopt;
 }
 
-void semantic_analysis(ASTNode *node, const string &function_name = "") {
+void semanticAnalysis(ASTNode *node, const string &function_name = "") {
     if (node) {
         semanticStack.push_back(node);
         switch (node->kind) {
@@ -418,10 +419,10 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 if (!node->children[0]) {
                     break;
                 }
-                semantic_analysis(node->children[0], function_name);
+                semanticAnalysis(node->children[0], function_name);
                 node->code = node->children[0]->code;
                 if (node->children[1]) {
-                    semantic_analysis(node->children[1], function_name);
+                    semanticAnalysis(node->children[1], function_name);
                     node->code = mergeCodeNode({node->code,
                                                   node->children[1]->code});
                 }
@@ -433,9 +434,9 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 break;
             case FUNC_DEF:
                 node->children[1]->type = get<String>(node->children[0]->value) == "int" ? INT : FLOAT;
-                semantic_analysis(node->children[1], get<String>(node->children[1]->value));
+                semanticAnalysis(node->children[1], get<String>(node->children[1]->value));
                 // T->children[2]->sNext = newLabel();
-                semantic_analysis(node->children[2], get<String>(node->children[1]->value));
+                semanticAnalysis(node->children[2], get<String>(node->children[1]->value));
                 node->code = mergeCodeNode({node->children[1]->code, node->children[2]->code});
                 break;
             case FUNC_DEC: {
@@ -452,7 +453,7 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 result.data = node->value;
                 node->code = genCodeNode(FUNCTION, opn1, opn2, result);
                 if (node->children[0]) {
-                    semantic_analysis(node->children[0], function_name);
+                    semanticAnalysis(node->children[0], function_name);
                     symbolTable[fill_result.value()].paramNum = node->children[0]->num;
                     node->code = mergeCodeNode({node->code, node->children[0]->code});
                 } else {
@@ -461,9 +462,9 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 break;
             }
             case PARAM_LIST:
-                semantic_analysis(node->children[0], function_name);
+                semanticAnalysis(node->children[0], function_name);
                 if (node->children[1]) {
-                    semantic_analysis(node->children[1], function_name);
+                    semanticAnalysis(node->children[1], function_name);
                     node->num = node->children[0]->num + node->children[1]->num;
                     node->code = mergeCodeNode({node->children[0]->code, node->children[1]->code});
                 } else {
@@ -535,11 +536,11 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
             case DEF_LIST:
                 node->code = nullptr;
                 if (node->children[0]) {
-                    semantic_analysis(node->children[0], function_name);
+                    semanticAnalysis(node->children[0], function_name);
                     node->code = node->children[0]->code;
                 }
                 if (node->children[1]) {
-                    semantic_analysis(node->children[1], function_name);
+                    semanticAnalysis(node->children[1], function_name);
                     node->code = mergeCodeNode({node->code,
                                                   node->children[1]->code});
                 }
@@ -549,12 +550,12 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 scopeStack.push_back(symbolTable.size());
                 node->code = nullptr;
                 if (node->children[0]) {
-                    semantic_analysis(node->children[0], function_name);
+                    semanticAnalysis(node->children[0], function_name);
                     node->code = node->children[0]->code;
                 }
                 if (node->children[1]) {
                     node->children[1]->sNext = node->sNext;
-                    semantic_analysis(node->children[1], function_name);
+                    semanticAnalysis(node->children[1], function_name);
                     node->code = mergeCodeNode({node->code,
                                                   node->children[1]->code});
                 }
@@ -572,11 +573,11 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                     node->children[0]->sNext = newLabel();
                 else
                     node->children[0]->sNext = node->sNext;
-                semantic_analysis(node->children[0], function_name);
+                semanticAnalysis(node->children[0], function_name);
                 node->code = node->children[0]->code;
                 if (node->children[1]) {
                     node->children[1]->sNext = node->sNext;
-                    semantic_analysis(node->children[1], function_name);
+                    semanticAnalysis(node->children[1], function_name);
                     if (node->children[0]->kind == RETURN || node->children[0]->kind == EXP_STMT ||
                         node->children[0]->kind == COMP_STM) {
                         node->code = mergeCodeNode({node->code,
@@ -589,7 +590,7 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 }
                 break;
             case EXP_STMT:
-                semantic_analysis(node->children[0], function_name);
+                semanticAnalysis(node->children[0], function_name);
                 node->code = node->children[0]->code;
                 break;
             case IF_THEN:
@@ -597,7 +598,7 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 node->children[0]->eFalse = node->sNext;
                 boolExpression(node->children[0]);
                 node->children[1]->sNext = node->sNext;
-                semantic_analysis(node->children[1], function_name);
+                semanticAnalysis(node->children[1], function_name);
                 node->code = mergeCodeNode({node->children[0]->code,
                                               genLabel(node->children[0]->eTrue),
                                               node->children[1]->code,
@@ -608,9 +609,9 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 node->children[0]->eFalse = newLabel();
                 boolExpression(node->children[0]);
                 node->children[1]->sNext = node->sNext;
-                semantic_analysis(node->children[1], function_name);
+                semanticAnalysis(node->children[1], function_name);
                 node->children[2]->sNext = node->sNext;
-                semantic_analysis(node->children[2], function_name);
+                semanticAnalysis(node->children[2], function_name);
                 node->code = mergeCodeNode({node->children[0]->code,
                                               genLabel(node->children[0]->eTrue),
                                               node->children[1]->code,
@@ -624,7 +625,7 @@ void semantic_analysis(ASTNode *node, const string &function_name = "") {
                 node->children[0]->eFalse = node->sNext;
                 boolExpression(node->children[0]);
                 node->children[1]->sNext = newLabel();
-                semantic_analysis(node->children[1], function_name);
+                semanticAnalysis(node->children[1], function_name);
                 node->code = mergeCodeNode({genGoto(node->children[1]->sNext),
                                               genLabel(node->children[1]->sNext),
                                               node->children[0]->code,
@@ -660,7 +661,7 @@ void entryPoint(ASTNode *node) {
     symbolTable[0].paramNum = 1;
     symbol_table::fill("0", "", 1, INT, fParam);
 
-    semantic_analysis(node);
+    semanticAnalysis(node);
     toObjectCode(node->code);
 }
 

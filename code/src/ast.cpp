@@ -188,3 +188,9 @@ void ast::printNode(ast::Node *node, int indent) {
         }
     }
 }
+
+ast::Code::Code() : kind(0), next(nullptr), prev(nullptr) {}
+
+ast::Node::Node() : kind(0), children(4, nullptr), idx(0), type(0), pos(0), num(0), code(nullptr) {}
+
+ast::Opt::Opt() : kind(0), data(0), type(0), level(0) {}
