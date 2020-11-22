@@ -28,7 +28,8 @@ namespace ast {
 
     struct Code {
         int kind;
-        Opt $1, $2, res;
+        vector<shared_ptr<Code>> data;
+        Opt op1, op2, res;
         shared_ptr<Code> prev, next;
     };
 
@@ -36,6 +37,7 @@ namespace ast {
         int kind;
         var value;
         vector<Node *> children;
+        int idx;
         string eTrue, eFalse, sNext;
         shared_ptr<Code> code;
         int type, pos, num;
@@ -49,13 +51,6 @@ namespace ast {
         const vector<Node *>& nodes = vector<Node *>()
     );
 
-    void entryPoint(Node *node);
-
-    void boolExpression(Node *node);
-
-    void expression(Node *node);
-
-    void toObjectCode(shared_ptr<Node> head);
 }
 
 using Operation = ast::Opt;

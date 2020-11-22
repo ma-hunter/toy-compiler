@@ -43,6 +43,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 18 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1921  */
+
+    #include "def.h"
+
+#line 52 "/home/shiroha/workspace/toy-compiler/code/script/../include/parser.tab.h" /* yacc.c:1921  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -120,14 +126,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 19 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1921  */
+#line 22 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1921  */
 
-	Integer type_int;
-	Float   type_float;
-	char    type_id[32];
-	ASTNode *ptr;
+	Integer   type_int;
+	Float     type_float;
+	char      type_id[32];
+	ASTNode   *ptr;
 
-#line 131 "/home/shiroha/workspace/toy-compiler/code/script/../include/parser.tab.h" /* yacc.c:1921  */
+#line 137 "/home/shiroha/workspace/toy-compiler/code/script/../include/parser.tab.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -38,7 +38,7 @@ void print_ast_node(ast::Node *node, int indent) {
                 printf("%*cType: %s\n", indent, ' ', get<String>(node->value).c_str());
                 break;
             case FLOAT:
-                printf("%*cFLAOT: %f\n", indent, ' ', get<Float>(node->value));
+                printf("%*cFLOAT: %f\n", indent, ' ', get<Float>(node->value));
                 break;
             case WHILE:
                 printf("%*cLoop Statement: (%d)\n", indent, ' ', node->pos);

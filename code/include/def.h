@@ -8,5 +8,6 @@
 #include "ast.h"
 #include "symbol_table.h"
 #include "config.h"
+#include "type.h"
 
 #endif //TOY_COMPILER_DEF_H

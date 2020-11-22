@@ -62,18 +62,14 @@
 /* Pull parsers.  */
 #define YYPULL 1
 
-
-
-
-/* First part of user prologue.  */
-#line 3 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:337  */
+/* "%code top" blocks.  */
+#line 3 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:315  */
 
 #include <cstdio>
 #include <cmath>
 #include <cstring>
 
 #include "parser.tab.h"
-#include "def.h"
 
 extern int yylineno;
 extern char *yytext;
@@ -82,7 +78,11 @@ void yyerror(const char* fmt, ...);
 void print_ast_node(ASTNode *,int);
 int yylex();
 
-#line 86 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:337  */
+#line 82 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:315  */
+
+
+
+
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -114,6 +114,12 @@ int yylex();
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 18 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:352  */
+
+    #include "def.h"
+
+#line 123 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:352  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -191,14 +197,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 19 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:352  */
+#line 22 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:352  */
 
-	Integer type_int;
-	Float   type_float;
-	char    type_id[32];
-	ASTNode *ptr;
+	Integer   type_int;
+	Float     type_float;
+	char      type_id[32];
+	ASTNode   *ptr;
 
-#line 202 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:352  */
+#line 208 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -524,12 +530,12 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    52,    52,    54,    55,    57,    58,    59,    61,    63,
-      64,    66,    68,    69,    71,    72,    74,    77,    80,    81,
-      83,    84,    85,    86,    87,    88,    89,    90,    92,    93,
-      94,    96,    98,    99,   101,   102,   104,   105,   106,   107,
-     108,   109,   110,   111,   112,   113,   114,   115,   116,   117,
-     118,   119,   120,   121,   122,   124,   125
+       0,    55,    55,    57,    58,    60,    61,    62,    64,    66,
+      67,    69,    71,    72,    74,    75,    77,    80,    83,    84,
+      86,    87,    88,    89,    90,    91,    92,    93,    95,    96,
+      97,    99,   101,   102,   104,   105,   107,   108,   109,   110,
+     111,   112,   113,   114,   115,   116,   117,   118,   119,   120,
+     121,   122,   123,   124,   125,   127,   128
 };
 #endif
 
@@ -1513,337 +1519,337 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 52 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+#line 55 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
     { print_ast_node((yyvsp[0].ptr),0); entrypoint((yyvsp[0].ptr));}
-#line 1519 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
-    break;
-
-  case 3:
-#line 54 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=nullptr;}
 #line 1525 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 4:
-#line 55 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(EXT_DEF_LIST,yylineno,{(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
+  case 3:
+#line 57 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=nullptr;}
 #line 1531 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 5:
-#line 57 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(EXT_VAR_DEF,yylineno,{(yyvsp[-2].ptr),(yyvsp[-1].ptr)});}
+  case 4:
+#line 58 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(EXT_DEF_LIST,yylineno,{(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
 #line 1537 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 6:
-#line 58 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(FUNC_DEF,yylineno,{(yyvsp[-2].ptr),(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
+  case 5:
+#line 60 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(EXT_VAR_DEF,yylineno,{(yyvsp[-2].ptr),(yyvsp[-1].ptr)});}
 #line 1543 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 7:
-#line 59 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=nullptr;}
+  case 6:
+#line 61 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(FUNC_DEF,yylineno,{(yyvsp[-2].ptr),(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
 #line 1549 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 8:
-#line 61 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(TYPE,yylineno);(yyval.ptr)->data = string((yyvsp[0].type_id));(yyval.ptr)->type=(string((yyvsp[0].type_id)) == "float")?FLOAT:INT;}
+  case 7:
+#line 62 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=nullptr;}
 #line 1555 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 9:
-#line 63 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=(yyvsp[0].ptr);}
+  case 8:
+#line 64 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(TYPE,yylineno);(yyval.ptr)->value = string((yyvsp[0].type_id));(yyval.ptr)->type=(string((yyvsp[0].type_id)) == "float")?FLOAT:INT;}
 #line 1561 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 10:
-#line 64 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(EXT_DEC_LIST,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 9:
+#line 66 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=(yyvsp[0].ptr);}
 #line 1567 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 11:
-#line 66 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(ID,yylineno);(yyval.ptr)->data = (yyvsp[0].type_id);}
+  case 10:
+#line 67 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(EXT_DEC_LIST,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1573 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 12:
-#line 68 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(FUNC_DEC,yylineno,{(yyvsp[-1].ptr)});(yyval.ptr)->data = (yyvsp[-3].type_id);}
+  case 11:
+#line 69 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(ID,yylineno);(yyval.ptr)->value = (yyvsp[0].type_id);}
 #line 1579 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 13:
-#line 69 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(FUNC_DEC,yylineno);(yyval.ptr)->data = (yyvsp[-2].type_id);(yyval.ptr)->ptr[0]=nullptr;}
+  case 12:
+#line 71 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(FUNC_DEC,yylineno,{(yyvsp[-1].ptr)});(yyval.ptr)->value = (yyvsp[-3].type_id);}
 #line 1585 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 14:
-#line 71 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(PARAM_LIST,yylineno,{(yyvsp[0].ptr)});}
+  case 13:
+#line 72 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(FUNC_DEC,yylineno);(yyval.ptr)->value = (yyvsp[-2].type_id);(yyval.ptr)->children[0]=nullptr;}
 #line 1591 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 15:
-#line 72 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(PARAM_LIST,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 14:
+#line 74 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(PARAM_LIST,yylineno,{(yyvsp[0].ptr)});}
 #line 1597 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 16:
-#line 74 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(PARAM_DEC,yylineno,{(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
+  case 15:
+#line 75 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(PARAM_LIST,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1603 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 17:
+  case 16:
 #line 77 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(COMP_STM,yylineno,{(yyvsp[-2].ptr),(yyvsp[-1].ptr)});}
+    {(yyval.ptr)=ast::newNode(PARAM_DEC,yylineno,{(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
 #line 1609 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 18:
+  case 17:
 #line 80 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=nullptr; }
+    {(yyval.ptr)=ast::newNode(COMP_STM,yylineno,{(yyvsp[-2].ptr),(yyvsp[-1].ptr)});}
 #line 1615 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 19:
-#line 81 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(STM_LIST,yylineno,{(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
+  case 18:
+#line 83 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=nullptr; }
 #line 1621 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 20:
-#line 83 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(EXP_STMT,yylineno,{(yyvsp[-1].ptr)});}
+  case 19:
+#line 84 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(STM_LIST,yylineno,{(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
 #line 1627 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 21:
-#line 84 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=(yyvsp[0].ptr);}
+  case 20:
+#line 86 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(EXP_STMT,yylineno,{(yyvsp[-1].ptr)});}
 #line 1633 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 22:
-#line 85 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(RETURN,yylineno,{(yyvsp[-1].ptr)});}
+  case 21:
+#line 87 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=(yyvsp[0].ptr);}
 #line 1639 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 23:
-#line 86 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(IF_THEN,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 22:
+#line 88 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(RETURN,yylineno,{(yyvsp[-1].ptr)});}
 #line 1645 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 24:
-#line 87 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(IF_THEN_ELSE,yylineno,{(yyvsp[-4].ptr),(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 23:
+#line 89 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(IF_THEN,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1651 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 25:
-#line 88 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(WHILE,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 24:
+#line 90 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(IF_THEN_ELSE,yylineno,{(yyvsp[-4].ptr),(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1657 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 26:
-#line 89 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(CONTINUE,yylineno);}
+  case 25:
+#line 91 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(WHILE,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1663 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 27:
-#line 90 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(BREAK,yylineno);}
+  case 26:
+#line 92 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(CONTINUE,yylineno);}
 #line 1669 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 28:
-#line 92 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=nullptr; }
+  case 27:
+#line 93 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(BREAK,yylineno);}
 #line 1675 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 29:
-#line 93 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(DEF_LIST,yylineno,{(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
+  case 28:
+#line 95 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=nullptr; }
 #line 1681 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 30:
-#line 94 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=nullptr;}
+  case 29:
+#line 96 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(DEF_LIST,yylineno,{(yyvsp[-1].ptr),(yyvsp[0].ptr)});}
 #line 1687 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 31:
-#line 96 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(VAR_DEF,yylineno,{(yyvsp[-2].ptr),(yyvsp[-1].ptr)});}
+  case 30:
+#line 97 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=nullptr;}
 #line 1693 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 32:
-#line 98 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(DEC_LIST,yylineno,{(yyvsp[0].ptr)});}
+  case 31:
+#line 99 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(VAR_DEF,yylineno,{(yyvsp[-2].ptr),(yyvsp[-1].ptr)});}
 #line 1699 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 33:
-#line 99 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(DEC_LIST,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 32:
+#line 101 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(DEC_LIST,yylineno,{(yyvsp[0].ptr)});}
 #line 1705 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 34:
-#line 101 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=(yyvsp[0].ptr);}
+  case 33:
+#line 102 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(DEC_LIST,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1711 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 35:
-#line 102 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(ASSIGNOP,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 34:
+#line 104 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=(yyvsp[0].ptr);}
 #line 1717 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 36:
-#line 104 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(ASSIGNOP,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 35:
+#line 105 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(ASSIGNOP,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1723 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 37:
-#line 105 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(AND,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 36:
+#line 107 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(ASSIGNOP,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1729 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 38:
-#line 106 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(OR,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 37:
+#line 108 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(AND,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1735 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 39:
-#line 107 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(RELOP,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});(yyval.ptr)->data = (yyvsp[-1].type_id);}
+  case 38:
+#line 109 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(OR,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1741 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 40:
-#line 108 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(PLUS,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 39:
+#line 110 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(RELOP,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});(yyval.ptr)->value = (yyvsp[-1].type_id);}
 #line 1747 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 41:
-#line 109 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(MINUS,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 40:
+#line 111 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(PLUS,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1753 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 42:
-#line 110 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(STAR,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 41:
+#line 112 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(MINUS,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1759 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 43:
-#line 111 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(MOD,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 42:
+#line 113 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(STAR,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1765 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 44:
-#line 112 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(DIV,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 43:
+#line 114 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(MOD,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1771 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 45:
-#line 113 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=(yyvsp[-1].ptr);}
+  case 44:
+#line 115 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(DIV,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1777 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 46:
-#line 114 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(UMINUS,yylineno,{(yyvsp[0].ptr)});}
+  case 45:
+#line 116 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=(yyvsp[-1].ptr);}
 #line 1783 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 47:
-#line 115 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(NOT,yylineno,{(yyvsp[0].ptr)});}
+  case 46:
+#line 117 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(UMINUS,yylineno,{(yyvsp[0].ptr)});}
 #line 1789 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 48:
-#line 116 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(DPLUS,yylineno,{(yyvsp[0].ptr)});}
+  case 47:
+#line 118 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(NOT,yylineno,{(yyvsp[0].ptr)});}
 #line 1795 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 49:
-#line 117 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(DPLUS,yylineno,{(yyvsp[-1].ptr)});}
+  case 48:
+#line 119 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(DPLUS,yylineno,{(yyvsp[0].ptr)});}
 #line 1801 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 50:
-#line 118 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(FUNC_CALL,yylineno,{(yyvsp[-1].ptr)});(yyval.ptr)->data = (yyvsp[-3].type_id);}
+  case 49:
+#line 120 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(DPLUS,yylineno,{(yyvsp[-1].ptr)});}
 #line 1807 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 51:
-#line 119 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(FUNC_CALL,yylineno);(yyval.ptr)->data = (yyvsp[-2].type_id);}
+  case 50:
+#line 121 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(FUNC_CALL,yylineno,{(yyvsp[-1].ptr)});(yyval.ptr)->value = (yyvsp[-3].type_id);}
 #line 1813 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 52:
-#line 120 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(ID,yylineno);(yyval.ptr)->data = (yyvsp[0].type_id);}
+  case 51:
+#line 122 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(FUNC_CALL,yylineno);(yyval.ptr)->value = (yyvsp[-2].type_id);}
 #line 1819 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 53:
-#line 121 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(INT,yylineno);(yyval.ptr)->data=(yyvsp[0].type_int);(yyval.ptr)->type=INT;}
+  case 52:
+#line 123 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(ID,yylineno);(yyval.ptr)->value = (yyvsp[0].type_id);}
 #line 1825 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 54:
-#line 122 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(FLOAT,yylineno);(yyval.ptr)->data=(yyvsp[0].type_float);(yyval.ptr)->type=FLOAT;}
+  case 53:
+#line 124 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(INT,yylineno);(yyval.ptr)->value=(yyvsp[0].type_int);(yyval.ptr)->type=INT;}
 #line 1831 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 55:
-#line 124 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(ARGS,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
+  case 54:
+#line 125 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(FLOAT,yylineno);(yyval.ptr)->value=(yyvsp[0].type_float);(yyval.ptr)->type=FLOAT;}
 #line 1837 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
-  case 56:
-#line 125 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
-    {(yyval.ptr)=make_node(ARGS,yylineno,{(yyvsp[0].ptr)});}
+  case 55:
+#line 127 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(ARGS,yylineno,{(yyvsp[-2].ptr),(yyvsp[0].ptr)});}
 #line 1843 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
     break;
 
+  case 56:
+#line 128 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1652  */
+    {(yyval.ptr)=ast::newNode(ARGS,yylineno,{(yyvsp[0].ptr)});}
+#line 1849 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
+    break;
 
-#line 1847 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
+
+#line 1853 "/home/shiroha/workspace/toy-compiler/code/script/../src/parser.tab.cc" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2080,30 +2086,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 128 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1918  */
+#line 131 "/home/shiroha/workspace/toy-compiler/code/script/../config/parser.y" /* yacc.c:1918  */
 
 
-int main(int argc, char *argv[]) {
-    string file_path;
-    if (argc >= 2) {
-        file_path = string(argv[1]);
-    } else {
-        file_path = "./test.txt";
-    }
 
-    printf("File path = %s\n", file_path.c_str());
-    yyin = fopen(file_path.c_str(), "r");
-    if (!yyin) exit(0);
-    yylineno = 1;
-    yyparse();
-    return 0;
-}
-
-#include<stdarg.h>
-void yyerror(const char* fmt, ...) {
-    va_list ap;
-    va_start(ap, fmt);
-    fprintf(stderr, "Grammar Error at Line %d Column %d: ", yylloc.first_line,yylloc.first_column);
-    vfprintf(stderr, fmt, ap);
-    fprintf(stderr, ".\n");
-}
