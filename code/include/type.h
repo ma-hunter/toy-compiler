@@ -7,14 +7,16 @@
 
 #include <string>
 
+#define __INT_32
+
 using Boolean = bool;
 using Char = char;
-#if 0
+#ifdef __INT_32
 using Integer  = int;
 using Long = long long;
 using Float = float;
 using Double = double;
-#else
+#elif defined __INT_64  // TODO: should adapt IR translator
 using Integer = long long;
 using Long = __int128;
 using Float = double;

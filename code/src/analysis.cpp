@@ -14,7 +14,7 @@
 #include <optional>
 
 using std::string, std::to_string, std::move, std::vector, std::nullopt;
-using symbol_table::SymbolFlag, symbol_table::fParam, symbol_table::fFunc, symbol_table::fTemp, symbol_table::fVar;
+using symbol_table::fParam, symbol_table::fFunc, symbol_table::fTemp, symbol_table::fVar;
 
 extern SymbolTable symbolTable;
 extern vector<int> scopeStack;
