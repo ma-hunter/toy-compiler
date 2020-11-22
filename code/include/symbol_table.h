@@ -59,6 +59,8 @@ using SymbolTable = symbol_table_t<Symbol>;
 #define iterate_symbol_table(symbol) for (const auto& [$alias, symbol] : symbolTable)
 #else
 #define iterate_symbol_table(symbol) for (const auto& symbol : symbolTable)
+#define re_iterate_symbol_table for (int $i = symbolTable.size() - 1; $i >= 0; -- $i)
+#define $symbol symbolTable[$i]
 #endif
 
 #endif //TOY_COMPILER_SYMBOL_TABLE_H

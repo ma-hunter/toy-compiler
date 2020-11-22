@@ -14,13 +14,13 @@ SymbolTable symbolTable;
 vector<int> scopeStack;
 
 optional<Symbol> symbol_table::searchByName(const string &name) {
-    iterate_symbol_table($symbol) {
+    re_iterate_symbol_table {
         if (name == $symbol.name) return $symbol;
     } return nullopt;
 }
 
 optional<Symbol> symbol_table::searchByFlag(const string &name, SymbolFlag flag) {
-    iterate_symbol_table($symbol) {
+    re_iterate_symbol_table {
         if (flag == $symbol.flag && name == $symbol.name) return $symbol;
     } return nullopt;
 }
@@ -30,7 +30,7 @@ optional<Symbol> symbol_table::searchByAlias(const string &alias) {
     if (symbolTable.count(alias)) return symbolTable[alias];
     else return nullopt;
 #else
-    iterate_symbol_table($symbol) {
+    re_iterate_symbol_table {
         if (alias == $symbol.alias) return $symbol;
     } return nullopt;
 #endif
