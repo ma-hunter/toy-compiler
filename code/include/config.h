@@ -22,24 +22,22 @@ constexpr bool PRINT_AST = false;
 constexpr bool PRINT_SYMBOL_TABLE = false;
 constexpr bool PRINT_LLVM_IR = false;
 
-// Define data structures use for symbol table.
-constexpr int VECTOR = 0;
-constexpr int STD_HASH_TABLE = 1;
-constexpr int CC_HASH_TABLE = 2;
-constexpr int GP_HASH_TABLE = 3;
-
 // Configure data structure use in symbol table.
-constexpr int SYMBOL_TABLE_T = STD_HASH_TABLE;
+// In hash map: pair [<string>alias, symbol_t]
+#define SYMBOL_TABLE_T(TYPE) SYMBOL_TABLE_##TYPE
+#define IS_HASH_TABLE
+#define SYMBOL_TABLE_T_VECTOR
 
 template <typename symbol_t>
-#if SYMBOL_TABLE_T == STD_HASH_TABLE
+#if defined SYMBOL_TABLE_T_STD_HASH_TABLE
 using symbol_table_t = unordered_map<string, symbol_t>;
-#elif SYMBOL_TABLE_T == CC_HASH_TABLE
+#elif defined SYMBOL_TABLE_T_CC_HASH_TABLE
 using symbol_table_t = cc_hash_table<string, symbol_t>;
-#elif SYMBOL_TABLE_T == GP_HASH_TABLE
+#elif defined SYMBOL_TABLE_T_GP_HASH_TABLE
 using symbol_table_t = gp_hash_table<string, symbol_t>;
-#elif SYMBOL_TABLE_T == VECTOR
+#elif defined SYMBOL_TABLE_T_VECTOR
 using symbol_table_t = vector<symbol_t>;
+#undef IS_HASH_TABLE
 #endif
 
 #endif //TOY_COMPILER_CONFIG_H
