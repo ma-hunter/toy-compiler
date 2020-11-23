@@ -55,5 +55,7 @@ add_definitions(${LLVM_DEFINITIONS})
 llvm_map_components_to_libnames(llvm_libs support core irreader interpreter)
 get_property(dirs DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build)
+
 add_executable(toy_compiler main.cpp ${SOURCE_DIRS} ${HEADER_DIRS})
 target_link_libraries(toy_compiler ${llvm_libs})
