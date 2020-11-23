@@ -31,7 +31,7 @@ Options:
     g   generate    Use Flex and Bison generate syntax parser sources.
     b   build       Build excutable file of CMake target.
     t   test        Test built binary and show its functions.   (Need to complete)
-    r   run <path>  Run compiler with <path> input file.        (Need to complete)
+    r   run <path>  Run compiler with <path> input file. 
     h   help        Show this menu, any token will point to this page.
     
 Created by Nanami 20/11/23, for academic use.
