@@ -19,12 +19,4 @@ fi
 if !(test -d $out); then
     mkdir $out
 fi
-for ii in $(seq 1 20)
-do 
-    if test -f `$tests/test$ii.txt`; then
-        (cd $out && $build/toy_compiler `$tests/test$ii.txt` > `$tests/out/test$ii.out` 2> `$tests/err/test$ii.err`)
-    else 
-        echo "Test completed"    
-        break
-    fi
-done            
+(cd $out && $build/toy_compiler $tests/test1.txt > $tests/out/test1.out 2> $tests/err/test1.err)          
