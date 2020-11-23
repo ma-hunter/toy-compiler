@@ -9,6 +9,7 @@
 #include "parser.tab.h"
 
 extern SymbolTable symbolTable;
+extern FILE *astOut;
 
 ast::Node *ast::newNode(int kind, int pos, const vector<Node *>& nodes) {
 
@@ -25,61 +26,65 @@ ast::Node *ast::newNode(int kind, int pos, const vector<Node *>& nodes) {
 void ast::printNode(ast::Node *node, int indent) {
 
     if constexpr (!PRINT_AST) return;
+    if (!astOut) {
+        fprintf(stderr, "Can\'t print AST node: FILE open failed.\n");
+        return;
+    }
 
     if (node) {
         switch (node->kind) {
             case INT:
-                printf("%*cINT: %d\n", indent, ' ', get<Integer>(node->value));
+                fprintf(astOut, "%*cINT: %d\n", indent, ' ', get<Integer>(node->value));
                 break;
             case ID:
-                printf("%*cID: %s\n", indent, ' ', get<String>(node->value).c_str());
+                fprintf(astOut, "%*cID: %s\n", indent, ' ', get<String>(node->value).c_str());
                 break;
             case TYPE:
-                printf("%*cType: %s\n", indent, ' ', get<String>(node->value).c_str());
+                fprintf(astOut, "%*cType: %s\n", indent, ' ', get<String>(node->value).c_str());
                 break;
             case FLOAT:
-                printf("%*cFLOAT: %f\n", indent, ' ', get<Float>(node->value));
+                fprintf(astOut, "%*cFLOAT: %f\n", indent, ' ', get<Float>(node->value));
                 break;
             case WHILE:
-                printf("%*cLoop Statement: (%d)\n", indent, ' ', node->pos);
-                printf("%*cLoop Condition: \n", indent + 2, ' ');
+                fprintf(astOut, "%*cLoop Statement: (%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cLoop Condition: \n", indent + 2, ' ');
                 printNode(node->children[0], indent + 4);
-                printf("%*cLoop Body: (%d)\n", indent + 2, ' ', node->pos);
+                fprintf(astOut, "%*cLoop Body: (%d)\n", indent + 2, ' ', node->pos);
                 printNode(node->children[1], indent + 4);
                 break;
             case RETURN:
-                printf("%*cReturn Expression:(%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cReturn Expression:(%d)\n", indent, ' ', node->pos);
                 printNode(node->children[0], indent + 2);
                 break;
             case CONTINUE:
-                printf("%*cContinue Statement\n", indent, ' ');
+                fprintf(astOut, "%*cContinue Statement\n", indent, ' ');
                 break;
             case BREAK:
-                printf("%*cBreak Statement\n", indent, ' ');
+                fprintf(astOut, "%*cBreak Statement\n", indent, ' ');
                 break;
             case EXT_DEF_LIST:
                 printNode(node->children[0], indent);
                 printNode(node->children[1], indent);
                 break;
             case EXT_VAR_DEF:
-                printf("%*cVariable Declaration: (%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cVariable Declaration: (%d)\n", indent, ' ', node->pos);
                 printNode(node->children[0], indent + 2);
-                printf("%*cVariable Name: \n", indent + 2, ' ');
+                fprintf(astOut, "%*cVariable Name: \n", indent + 2, ' ');
                 printNode(node->children[1], indent + 4);
                 break;
             case FUNC_DEF:
-                printf("%*cFunction Declaration: (%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cFunction Declaration: (%d)\n", indent, ' ', node->pos);
                 printNode(node->children[0], indent + 2);
                 printNode(node->children[1], indent + 2);
                 printNode(node->children[2], indent + 2);
                 break;
             case FUNC_DEC:
-                printf("%*cFunction Name: %s\n", indent, ' ', get<String>(node->value).c_str());
+                fprintf(astOut, "%*cFunction Name: %s\n", indent, ' ', get<String>(node->value).c_str());
                 if (node->children[0]) {
-                    printf("%*cFunction Parameters: \n", indent, ' ');
+                    fprintf(astOut, "%*cFunction Parameters: \n", indent, ' ');
                     printNode(node->children[0], indent + 2);
                 } else {
-                    printf("%*cFunction without Parameters: \n", indent + 2, ' ');
+                    fprintf(astOut, "%*cFunction without Parameters: \n", indent + 2, ' ');
                 }
                 break;
             case EXT_DEC_LIST:
@@ -91,22 +96,22 @@ void ast::printNode(ast::Node *node, int indent) {
                 printNode(node->children[1], indent);
                 break;
             case PARAM_DEC:
-                printf("%*cType: %s, Parameter Name: %s\n", indent, ' ', node->children[0]->type == INT ? "int" : "float",
+                fprintf(astOut, "%*cType: %s, Parameter Name: %s\n", indent, ' ', node->children[0]->type == INT ? "int" : "float",
                        get<String>(node->children[1]->value).c_str());
                 break;
             case VAR_DEF:
-                printf("%*cVariable Decl: (%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cVariable Decl: (%d)\n", indent, ' ', node->pos);
                 printNode(node->children[0], indent + 2);
                 printNode(node->children[1], indent + 2);
                 break;
             case DEC_LIST: {
-                printf("%*cVariable Name Decl:\n", indent, ' ');
+                fprintf(astOut, "%*cVariable Name Decl:\n", indent, ' ');
                 ASTNode *ptr = node;
                 while (ptr) {
                     if (ptr->children[0]->kind == ID)
-                        printf("%*c %s\n", indent + 4, ' ', get<String>(ptr->children[0]->value).c_str());
+                        fprintf(astOut, "%*c %s\n", indent + 4, ' ', get<String>(ptr->children[0]->value).c_str());
                     else if (ptr->children[0]->kind == ASSIGNOP) {
-                        printf("%*c %s ASSIGNOP\n ", indent + 4, ' ', get<String>(ptr->children[0]->children[0]->value).c_str());
+                        fprintf(astOut, "%*c %s ASSIGNOP\n ", indent + 4, ' ', get<String>(ptr->children[0]->children[0]->value).c_str());
                         printNode(ptr->children[0]->children[1], indent + get<String>(ptr->children[0]->children[0]->value).size() + 8);
                     }
                     ptr = ptr->children[1];
@@ -118,10 +123,10 @@ void ast::printNode(ast::Node *node, int indent) {
                 printNode(node->children[1], indent);
                 break;
             case COMP_STM:
-                printf("%*cComposite Expression: (%d)\n", indent, ' ', node->pos);
-                printf("%*cVariable Declaration (Composite Expression) :\n", indent + 2, ' ');
+                fprintf(astOut, "%*cComposite Expression: (%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cVariable Declaration (Composite Expression) :\n", indent + 2, ' ');
                 printNode(node->children[0], indent + 4);
-                printf("%*cExpression (Composite Expression) :\n", indent + 2, ' ');
+                fprintf(astOut, "%*cExpression (Composite Expression) :\n", indent + 2, ' ');
                 printNode(node->children[1], indent + 4);
                 break;
             case STM_LIST:
@@ -129,39 +134,39 @@ void ast::printNode(ast::Node *node, int indent) {
                 printNode(node->children[1], indent);
                 break;
             case EXP_STMT:
-                printf("%*cExpression:(%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cExpression:(%d)\n", indent, ' ', node->pos);
                 printNode(node->children[0], indent + 2);
                 break;
             case IF_THEN:
-                printf("%*cIF Expression: (%d)\n", indent, ' ', node->pos);
-                printf("%*cIF Conds:\n", indent + 2, ' ');
+                fprintf(astOut, "%*cIF Expression: (%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cIF Conds:\n", indent + 2, ' ');
                 printNode(node->children[0], indent + 4);
-                printf("%*cIF Body:(%d)\n", indent + 2, ' ', node->pos);
+                fprintf(astOut, "%*cIF Body:(%d)\n", indent + 2, ' ', node->pos);
                 printNode(node->children[1], indent + 4);
                 break;
             case IF_THEN_ELSE:
-                printf("%*cIF Expression - Else: (%d)\n", indent, ' ', node->pos);
-                printf("%*cIF Conds: \n", indent + 2, ' ');
+                fprintf(astOut, "%*cIF Expression - Else: (%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cIF Conds: \n", indent + 2, ' ');
                 printNode(node->children[0], indent + 4);
-                printf("%*cIF Body: (%d)\n", indent + 2, ' ', node->pos);
+                fprintf(astOut, "%*cIF Body: (%d)\n", indent + 2, ' ', node->pos);
                 printNode(node->children[1], indent + 4);
-                printf("%*cELSE Body: (%d)\n", indent + 4, ' ', node->pos);
+                fprintf(astOut, "%*cELSE Body: (%d)\n", indent + 4, ' ', node->pos);
                 printNode(node->children[2], indent + 4);
                 break;
             case FUNC_CALL:
-                printf("%*cFunction Call: (%d)\n", indent, ' ', node->pos);
-                printf("%*cFunction Name: %s\n", indent + 2, ' ', get<String>(node->value).c_str());
+                fprintf(astOut, "%*cFunction Call: (%d)\n", indent, ' ', node->pos);
+                fprintf(astOut, "%*cFunction Name: %s\n", indent + 2, ' ', get<String>(node->value).c_str());
                 printNode(node->children[0], indent + 2);
                 break;
             case ARGS: {
                 int i = 1;
                 while (node) {
                     ASTNode *ptr = node->children[0];
-                    printf("%*cParameter #%d Parameter Expression: \n", indent, ' ', i++);
+                    fprintf(astOut, "%*cParameter #%d Parameter Expression: \n", indent, ' ', i++);
                     printNode(ptr, indent + 2);
                     node = node->children[1];
                 }
-                printf("\n");
+                fprintf(astOut, "\n");
                 break;
             }
             case ASSIGNOP:
@@ -174,7 +179,7 @@ void ast::printNode(ast::Node *node, int indent) {
             case DIV:
             case MOD: {
                 if (node->value.index() == 2) {
-                    printf("%*c%s\n", indent, ' ', get<String>(node->value).c_str());
+                    fprintf(astOut, "%*c%s\n", indent, ' ', get<String>(node->value).c_str());
                 }
                 printNode(node->children[0], indent + 2);
                 printNode(node->children[1], indent + 2);
@@ -182,7 +187,7 @@ void ast::printNode(ast::Node *node, int indent) {
             }
             case NOT:
             case UMINUS:
-                printf("%*c%s\n", indent, ' ', get<String>(node->value).c_str());
+                fprintf(astOut, "%*c%s\n", indent, ' ', get<String>(node->value).c_str());
                 printNode(node->children[0], indent + 2);
                 break;
         }

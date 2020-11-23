@@ -15,6 +15,7 @@ using symbol_table::fParam, symbol_table::fFunc, symbol_table::fTemp, symbol_tab
 using namespace llvm;
 
 extern SymbolTable symbolTable;
+extern FILE *irOut;
 
 pair<Value *, int> parseOperand(
         LLVMContext &TheContext,
@@ -712,7 +713,16 @@ void toObjectCode(const shared_ptr<CodeNode>& head) {
     } while (cur != head);
 
     if constexpr (PRINT_LLVM_IR) {
-        TheModule.print(errs(), nullptr);
+        std::error_code ec;
+        raw_fd_ostream ir_ll = raw_fd_ostream("ir.ll", ec);
+        if (ec.value()) {
+            fprintf(stderr, "Trouble occurred in llvm::raw_ostream, IR code will print to stderr.\n");
+            fprintf(stderr, "\n\n========================[LLVM IR Code Below]========================\n\n");
+            TheModule.print(errs(), nullptr);
+        } else {
+            TheModule.print(ir_ll, nullptr);
+            fprintf(stderr, "IR code has printed to file \'ir.ll\'.\n");
+        }
     }
     verifyModule(TheModule, &(errs()));
 

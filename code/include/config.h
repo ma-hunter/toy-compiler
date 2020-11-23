@@ -20,7 +20,7 @@ using __gnu_pbds::cc_hash_table, __gnu_pbds::gp_hash_table;
 // Configure if print methods work.
 constexpr bool PRINT_AST = true;
 constexpr bool PRINT_SYMBOL_TABLE = true;
-constexpr bool PRINT_LLVM_IR = false;
+constexpr bool PRINT_LLVM_IR = true;
 
 // Configure data structure use in symbol table.
 // In hash map: pair [<string>alias, symbol_t]

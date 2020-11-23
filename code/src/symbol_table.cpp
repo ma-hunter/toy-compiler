@@ -12,6 +12,7 @@ using symbol_table::SymbolFlag, symbol_table::fNull;
 
 SymbolTable symbolTable;
 vector<int> scopeStack;
+extern FILE *sybOut;
 
 optional<Symbol> symbol_table::searchByName(const string &name) {
     re_iterate_symbol_table {
@@ -75,12 +76,16 @@ optional<int> symbol_table::fill(
 void symbol_table::print() {
 
     if constexpr (!PRINT_SYMBOL_TABLE) return;
-    printf("%9s %9s %9s %9s %9s\n", "Name", "Alias", "Level", "Type", "Flag");
+    if (!sybOut) {
+        fprintf(stderr, "Can\'t print symbol table: FILE open failed.\n");
+        return;
+    }
+    fprintf(sybOut, "%9s %9s %9s %9s %9s\n", "Name", "Alias", "Level", "Type", "Flag");
     iterate_symbol_table(symbol)
-        printf("%9s %9s %9d %9s %9c\n", symbol.name.c_str(),
+        fprintf(sybOut, "%9s %9s %9d %9s %9c\n", symbol.name.c_str(),
                symbol.alias.c_str(), symbol.level,
                symbol.type == INT ? "int" : "float", symbol.flag);
-    printf("\n\n");
+    fprintf(sybOut, "\n\n");
 }
 
 symbol_table::Symbol::Symbol() : level(0), type(0), paramNum(0), flag(fNull), idx(0) {}
