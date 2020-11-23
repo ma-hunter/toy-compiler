@@ -2,7 +2,8 @@
 set -e
 
 me=$(dirname $(readlink -f $0))
-rm $me/../src/lex.yy.cc $me/../include/parser.tab.h $me/../src/parser.tab.cc
+rm -f $me/../src/lex.yy.cc $me/../include/parser.tab.h $me/../src/parser.tab.cc
 rm -rf $me/../build/ $me/../cmake
+rm -rf $me/../test/log/ $me/../test/err/ $me/../test/out/ $me/../out/
 
-echo "Deleted cmake files and syntax parser."
+echo "Deleted cmake files, test temporaries and syntax parser."
