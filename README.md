@@ -32,11 +32,14 @@
 
 在 `code/script/` 目录下有实用脚本，用于完成特定功能：
 
-- `clear.sh` ：清除 Flex 和 Bison 生成的文法/语法处理器源文件，<font color="red">项目可能会因此而不能编译</font>
+- `clear.sh` ：清除 Flex 和 Bison 生成的文法/语法处理器和临时文件，<font color="red">项目可能会因此而不能编译</font>
 - `generate.sh` ：使用 Flex 和 Bison 重新生成文法/语法处理器的源文件
-- `setup_env.sh` ：设置环境，安装执行本项目所需的必要依赖（仅限 Linux 环境）
+- `setup.sh` ：设置环境，安装执行本项目所需的必要依赖（仅限 Linux 环境）
+- `install.sh` ：加载 CMake 项目，并产生临时文件，用于下一步的构建
+- `build.sh` ：构建二进制文件，在此之前需要先加载 CMake 项目才可以编译
+- 测试脚本、运行脚本施工中……
 
-
+您也可以在项目的根目录中使用 `bash start.sh [option]` 来快捷执行上面的操作
 
 ### 测试用例
 
