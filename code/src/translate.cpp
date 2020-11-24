@@ -721,7 +721,11 @@ void toObjectCode(const shared_ptr<CodeNode>& head) {
             TheModule.print(errs(), nullptr);
         } else {
             TheModule.print(ir_ll, nullptr);
+            system("llvm-as-10 ir.ll -o=ir.bc");
+            system("clang -S ir.bc > clang1 2> clang2");
+            system("rm -f ir.bc clang1 clang2");
             fprintf(stderr, "IR code has printed to file \'ir.ll\'.\n");
+            fprintf(stderr, "Assembly code has printed to file \'ir.s\'.\n");
         }
     }
     verifyModule(TheModule, &(errs()));
