@@ -28,6 +28,43 @@
 
 ### 使用方法
 
+#### 我要怎么运行？
+
+首先，<font color="red">这个项目只能在 Ubuntu 18.04、Ubuntu 20.04 和 Debian 10 上运行；</font>其他平台不保障正常运行。
+
+`code/` 目录下有全自动脚本 `start.sh`，可以直接运行查看使用帮助；或者你可以：
+
+```bash
+# 安装必要的依赖项（build-essential gdb gcc clang llvm-10 cmake）
+bash ./code/start.sh s
+
+# 如果你已经通过或不通过脚本删除了文法代码，需要重新生成
+bash ./code/start.sh g
+
+# 执行编译，并且以 test1.txt 作为测试用例运行
+bash ./code/start.sh i
+bash ./code/start.sh b
+bash ./code/start.sh r
+
+# 如果需要测试报错功能，可以使用下面的命令自动测试 test 目录下所有的样例
+bash ./code/start.sh t
+
+# 清除生成器生成的文法代码，以及编译过程中生成的文件
+bash ./code/start.sh c
+```
+
+测试 `test1.txt` 生成的文件包含如下内容：
+
+| 名称      | 用途                                                         |
+| --------- | ------------------------------------------------------------ |
+| `ast.txt` | 输出的 AST，是一个森林（定义了多个函数的时候）               |
+| `syb.txt` | 包含多个作用域的符号表的输出                                 |
+| `ir.ll`   | 生成的目标代码（对应实验 3 的中间代码）                      |
+| `asm.s`   | 生成的目标代码，基于 `x86_64-pc-linux-gnu` 平台的汇编（对应实验 4 的目标代码） |
+| `exec`    | 使用编译器 `clang` 编译上面得到的汇编文件，得到可执行文件    |
+
+这些文件都在 `code/out` 目录下。
+
 #### 使用脚本
 
 在 `code/script/` 目录下有实用脚本，用于完成特定功能：
