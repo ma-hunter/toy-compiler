@@ -32,6 +32,12 @@ int main(int argc, char *argv[]) {
     if (!yyin) exit(0);
     yylineno = 1;
     yyparse();
+
+    if constexpr (PRINT_LLVM_IR) {
+        system("llvm-as-10 ir.ll -o=ir.bc");
+        system("clang -S ir.bc > clang1 2> clang2");
+        system("rm -f ir.bc clang1 clang2");
+    }
     exit(EXIT_SUCCESS);
 }
 
