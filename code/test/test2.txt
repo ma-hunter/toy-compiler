@@ -1,0 +1,4 @@
+int main() {
+    print_int(b);
+    return 0;
+}

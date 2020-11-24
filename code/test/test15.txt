@@ -1,0 +1,6 @@
+int main() {
+    int b = 114514;
+    1919 = b;
+    print_int(b);
+    return 0;
+}
