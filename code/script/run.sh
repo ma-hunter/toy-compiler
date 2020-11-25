@@ -21,5 +21,6 @@ fi
 (cd $out && $build/toy_compiler $tests/test1.txt)    
 echo "Info: AST, symbol table and LLVM IR code is in '$out'"   
 
+(cd $out && rm -f clang1 clang2 ir.bc)
 (cd $out && clang asm.s -o exec)    
 echo "Info: Assembly code and executable is in '$out'"
